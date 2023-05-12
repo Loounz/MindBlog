@@ -1,0 +1,27 @@
+GET http://127.0.0.1:5000/users/31 HTTP/1.1
+
+###
+POST http://127.0.0.1:5000/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "UserId": 30,
+    "UserName": "shitfkl",
+    "UserEmail": "22345678910",
+    "UserPassword": "hello",
+    "id": 34,
+    "user_name": "shit"
+}
+
+###
+POST http://127.0.0.1:5000/users HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+{
+    "user_continuesign": 30,
+    "user_password": "shitfkl",
+    "user_phonenumber": "22345678910",
+    "user_points": 99,
+    "id": 34,
+    "user_name": "shit"
+}
