@@ -2,7 +2,9 @@ from flask import Flask
 from MindBlog.db import *
 from flask_cors import CORS
 
-from MindBlog.API.UserApi import userapiInit
+from MindBlog.api.UserApi import userapiInit
+from MindBlog.api.ArticleApi import articleApiInit
+from MindBlog.api.CommentApi import commentApiInit
 
 def create_app():
     app = Flask(__name__);
@@ -16,6 +18,10 @@ def create_app():
     
     # 初始化 userApi
     userapiInit(app);
+    # 初始化 articleApi
+    articleApiInit(app);
+    # 初始化 commentApi
+    commentApiInit(app);
     
     # 注册测试蓝图
     

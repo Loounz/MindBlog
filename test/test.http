@@ -1,6 +1,7 @@
-GET http://127.0.0.1:5000/users/31 HTTP/1.1
+### user get test
+GET http://127.0.0.1:5000/users/30 HTTP/1.1
 
-###
+### user post test
 POST http://127.0.0.1:5000/users HTTP/1.1
 Content-Type: application/json
 
@@ -13,7 +14,7 @@ Content-Type: application/json
     "user_name": "shit"
 }
 
-###
+### user post test [defferent content_type]
 POST http://127.0.0.1:5000/users HTTP/1.1
 Content-Type: application/x-www-form-urlencoded
 
@@ -24,4 +25,34 @@ Content-Type: application/x-www-form-urlencoded
     "user_points": 99,
     "id": 34,
     "user_name": "shit"
+}
+
+### article get test
+GEt http://127.0.0.1:5000/articles/30 HTTP/1.1
+
+### article post test
+POST http://127.0.0.1:5000/articles/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "ArticleId" : 30,
+    "ArticleTitle" : "my first article",
+    "ArticleAuthor" : "looun",
+    "ArticleAuthorId" : 30,
+    "ArticleContext" : "hello motherfuker.",
+    "ArticleComment" : "SHIT article."
+}
+
+### comment get test
+GEt http://127.0.0.1:5000/comments/12 HTTP/1.1
+
+### comment post test
+POST http://127.0.0.1:5000/comments/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "CommentId" : 12,
+    "CommentContext" : "your article is good, keep posting.",
+    "CommentUsername" : "looun",
+    "CommentTime" : "2023-5-15"
 }

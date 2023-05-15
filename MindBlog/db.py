@@ -1,17 +1,17 @@
 from flask_sqlalchemy import SQLAlchemy
 
-db = SQLAlchemy();
+g_db = SQLAlchemy();
 
 # 初始化数据库【不太完善，每次启动都会初始化一次】
 def dbInit(app):
-    db.init_app(app);
-    db.create_all();
+    g_db.init_app(app);
+    g_db.create_all();
 
 # 写入数据
 def dbAddData(data):
     try:
-        db.session.add(data);
-        db.session.commit();
+        g_db.session.add(data);
+        g_db.session.commit();
         return True;
     except Exception as error:
         # [todo: 把错误日志写进文本]
@@ -22,7 +22,7 @@ def dbAddData(data):
 def dbUpdateData(data):
     try:
         data.verified = True;
-        db.commit();
+        g_db.commit();
         return True;
     except Exception as error:
         # [todo: 把错误日志写进文本]
@@ -32,8 +32,8 @@ def dbUpdateData(data):
 # 删除数据
 def dbDeleteData(data):
     try:
-        db.session.delete(data);
-        db.session.commit();
+        g_db.session.delete(data);
+        g_db.session.commit();
         return True;
     except Exception as Error:
         # [todo: 把错误日志写进文本]
