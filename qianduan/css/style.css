@@ -1,0 +1,58 @@
+/*头部导航栏的布局*/
+#header{
+    width:100%;
+    height:50px;
+    background: burlywood;
+}
+.header_left{
+    width:30%;
+    float:left;
+}
+.header_center{
+    width:30%;
+    position:absolute;
+    left:800px;
+    top:10px;
+}
+.header_right{
+    width:10%;
+    float:right;
+    position:absolute;
+    top:10px;
+    right:25px;
+}
+
+/*左下内容布局*/
+#left_body{
+    width:70%;
+    height: 900px;
+    background-color: beige;
+    float:left;
+}
+
+/*右下内容布局*/
+#right_body{
+    width:30%;
+    height:900px;
+    background-color:black;
+    float:right;
+}
+
+/*脚页的布局*/
+#foot_body{
+    width:100%;
+    height:300px;
+    background-color: aqua;
+    position:absolute;
+    top:850px;
+    left:0px;
+}
+
+#result{
+    width:80%;
+    height:850px;
+    background-color: aliceblue;
+    position:absolute;
+    top:50px;
+    left:10%;
+}
