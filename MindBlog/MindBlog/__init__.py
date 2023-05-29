@@ -45,14 +45,17 @@ def create_app():
     '''
     # 生成虚拟数据
     @app.cli.command('fakedata')
-    @click.argument("user")
-    def fake(user=None):
+    def fake():
         '''fake 30 users & 10 posts data.'''
-        if not user:
-            fakeUsers(30);
-            fakeArticles(10);
-        else:
-            fakeArticlesforUser(user);
+        fakeUsers(30);
+        fakeArticles(10);
+    
+    # 生成虚拟数据
+    @app.cli.command('fakearticle')
+    @click.argument("user")
+    def fakearticles(user):
+        '''fake a existed user some articles.'''
+        fakeArticlesforUser(user);
 
     
     # 注册首页蓝图

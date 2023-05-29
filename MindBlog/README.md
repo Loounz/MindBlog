@@ -27,6 +27,14 @@ $ .\venv\Scripts\activate
 ```
 http://127.0.0.1:5000
 ```
+### 4. 使用账号：looun@foxmail.com 密码：123456 可登录账号
+### 5. 也可以自己注册账号。
+```python
+#给自己账号构造一些文章数据
+(venv)$ flask fakearticle [你的用户名]
+#给整个项目构造一些用户和文章数据
+(venv)$ flask fakedata
+```
 
 ## 预览
 live demo
