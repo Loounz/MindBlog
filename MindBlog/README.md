@@ -11,7 +11,7 @@
 ```
 git clone git@github.com:Loounz/MindBlog.git
 ```
-### 2. 命令行或者power shell进入目录/MindBlog下，配置虚拟环境、配置环境参数。
+### 2. 命令行或者power shell进入目录/MindBlog/MindBlog下，配置虚拟环境、配置环境参数。
 ```python
 #配置虚拟环境[windows]
 $ python -m venv venv
