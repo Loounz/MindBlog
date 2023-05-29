@@ -23,6 +23,10 @@ $ .\venv\Scripts\activate
 (venv)$ $env:FLASK_ENV='development'
 (venv)$ flask --debug run
 ```
+### 3. 浏览器输入本地链接即可访问应用。
+```
+http://127.0.0.1:5000
+```
 
 ## 预览
 live demo
