@@ -8,11 +8,11 @@
   
 ## 使用方法
 ### 1. 克隆项目
-'''
+```
 git clone git@github.com:Loounz/MindBlog.git
-'''
+```
 ### 2. 命令行或者power shell进入目录/MindBlog下，配置虚拟环境、配置环境参数。
-'''python
+```python
 #配置虚拟环境[windows]
 $ python -m venv venv
 $ .\venv\Scripts\activate
@@ -22,7 +22,7 @@ $ .\venv\Scripts\activate
 (venv)$ $env:FLASK_APP='MindBlog'
 (venv)$ $env:FLASK_ENV='development'
 (venv)$ flask --debug run
-'''
+```
 
 ## 预览
 live demo
