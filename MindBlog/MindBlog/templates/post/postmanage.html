@@ -1,0 +1,105 @@
+{% extends "base.html" %}
+
+{% block title %}
+MindBlog -- 个人空间
+{% endblock %}
+
+{% block header%}
+{{ super() }}
+
+<style>
+  .label {
+  display: inline;
+  padding: .2em .6em .3em;
+  font-size: 75%;
+  font-weight: 700;
+  line-height: 1;
+  color: #050505;
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: .25em;
+}
+</style>
+
+{% endblock %}
+
+{% block page_content %}
+
+<script>
+  // 加载个人的所有文章
+  function deletePost(id){
+    $.ajax({
+      type:'get',
+      url:'http://127.0.0.1:5000/delete/'+id,
+      success:function(data){
+        if(data['status'] == 'success')
+        {
+          // 删除成功后刷新页面
+          location.reload(true);
+        }else{
+          alert('删除文章失败。');
+        }
+      }
+    })
+  }
+</script>
+
+<div class="container pt-3 ml-0 mt-5 pl-">
+  <div class="mb-3 d-flex align-items-center">
+    <img height="80" src="../static/img/yy.jpg">
+    <div class="pl-3">
+      <h2 class="mb-2 h6 font-weight-bold">
+      <a class="text-dark" href="./article.html">{{ current_user.UserName }}</a>
+      </h2>
+      <div class="card-text text-muted small">
+         {{ current_user.UserEmail }}
+      </div>
+      <small class="text-muted">Dec 12 · 5 min read</small>
+    </div>
+  </div>
+</div>
+<div class="container pt-3 ml-0 mt-5 pl-3">
+
+  <ul class="nav nav-tabs" id="myTab" role="tablist">
+    <li class="nav-item" role="presentation">
+      <button class="nav-link active" id="home-tab" data-toggle="tab" data-target="#home" type="button" role="tab" aria-controls="home" aria-selected="true">Articles</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="profile-tab" data-toggle="tab" data-target="#profile" type="button" role="tab" aria-controls="profile" aria-selected="false">Profile</button>
+    </li>
+    <li class="nav-item" role="presentation">
+      <button class="nav-link" id="contact-tab" data-toggle="tab" data-target="#contact" type="button" role="tab" aria-controls="contact" aria-selected="false">Contact</button>
+    </li>
+  </ul>
+  <!--<a class="btn btn-primary pr-auto" href="#" role="button">新增</a>-->
+  <div class="tab-content" id="myTabContent">
+    <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+      {% for post in posts%}
+      <div class="mb-3 d-flex justify-content-between pt-2">
+        <div class="pr-3">
+          <h2 class="mb-1 h4 font-weight-bold pl-auto">
+            <a class="text-dark" href="{{ url_for('post.checkPost',id=post.ArticleId) }}">{{ post['ArticleTitle'] }}</a>
+          </h2>
+          <p>{{ post['ArticleContent'] }}</p>
+          <div class="card-text text-muted small">
+             {{ post['ArticleAuthor'].UserName }}
+          </div>
+          <small class="text-muted">{{ post['ArticlePostDate'] }}</small>
+          <small class="text-muted">{{ post['ArticleRead'] }}</small>
+        </div>
+        <div>
+            <!--加个编辑按钮-->
+            <a class="btn btn-primary pr-auto" href="{{ url_for('post.editPost',id=post.ArticleId) }}" role="button">编辑</a>
+            <a class="btn btn-primary pr-auto" href="javascript:deletePost({{ post.ArticleId }});" role="button">删除</a>
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+    <div class="tab-pane fade" id="profile" role="tabpanel" aria-labelledby="profile-tab">...</div>
+    <div class="tab-pane fade" id="contact" role="tabpanel" aria-labelledby="contact-tab">...</div>
+  </div>
+
+</div>
+    
+{% endblock %}

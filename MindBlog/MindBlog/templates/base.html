@@ -1,0 +1,94 @@
+{% extends "boot_base.html" %}
+{% from 'bootstrap4/form.html' import render_form%}
+{% from "bootstrap4/form.html" import render_field %}
+
+{% block title %}MindBlog{% endblock %}
+
+{% block head %}
+{{ super() }}
+<link rel="shortcut icon" href="{{ url_for('static',filename='yy.jpg') }}" type="image/x-icon">
+<link rel="icon" href="{{ url_for('static',filename='yy.jpg') }}" type="image/x-icon">
+{% endblock %}
+
+{% block navbar %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <a class="navbar-brand" href="{{ url_for('home.index')}}">MindBlog</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+  
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="{{ url_for('home.index') }}">Home <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">Link</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+            Dropdown
+          </a>
+          <div class="dropdown-menu">
+            <a class="dropdown-item" href="#">Action</a>
+            <a class="dropdown-item" href="#">Another action</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="#">Something else here</a>
+          </div>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link disabled">Disabled</a>
+        </li>
+      </ul>
+      <form class="form-inline my-2 my-lg-0">
+        {% block loginbutton %}
+        <!--<input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">-->
+        {% if current_user.is_authenticated %}
+
+        <!--显示用户名字，可以点击下拉-->
+        <li class="nav-item dropdown list-unstyled">
+          <a class="nav-link" href="#" role="button" data-toggle="dropdown" aria-expanded="false">
+            {{ current_user.UserName }}
+          </a>
+          <div class="dropdown-menu dropdown-menu-right" style="min-width:50px;">
+            <p class="text-center">{{ current_user.UserEmail }}</p>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item " href="{{ url_for('post.newPost')}}">new post</a>
+            <a class="dropdown-item " href="{{ url_for('auth.space',id=current_user.UserId)}}">space</a>
+            <a class="dropdown-item " href="{{ url_for('auth.changepassword') }}">change-password</a>
+            <a class="dropdown-item" href="{{ url_for('auth.changeinfo') }}">change-info</a>
+            <div class="dropdown-divider"></div>
+            <a class="dropdown-item" href="{{ url_for('auth.logout')}}">logout</a>
+          </div>
+        </li>
+
+        {% else %}
+        <button class="btn btn-outline-success my-2 my-sm-0" type="submit"><a href="{{ url_for('auth.login') }}">登录</a></button>
+        {% endif %}
+        {% endblock %} 
+      </form>
+    </div>
+  </nav>
+{% endblock %}
+
+{% block content %}
+<div class="alter">
+  {% for message in get_flashed_messages() %}
+  <div class="alert alert-secondary" role="alert">
+    {{ message }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+
+  {% endfor %}
+</div>
+<div class="container">
+    {% block page_content %}{% endblock %}
+</div>
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+{{ moment.include_moment() }}
+{% endblock %}

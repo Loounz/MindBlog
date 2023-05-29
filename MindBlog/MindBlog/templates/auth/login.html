@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+MindBlog - 登录
+{% endblock %}
+
+{% block page_content %}
+<div class="page-header mt-5 col-md-4">
+    <h1>登录</h1>
+</div>
+<div class="col-md-4 mt-4">
+    {{ render_form(form) }}
+    <br>
+    <p class="pt-2">没有账号？<a href="{{ url_for('auth.register') }}">点击注册</a></p>
+    <br>
+    <p class="pt-2">忘记密码？<a href="{{ url_for('auth.changepassword') }}">找回</a></p>
+</div>
+{% endblock %}

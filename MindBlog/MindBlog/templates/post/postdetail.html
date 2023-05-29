@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+
+{% block title %}
+MindBlog -- {{ post.ArticleTitle }}
+{% endblock %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+
+{% block page_content %}
+<div class="container mt-5 ml-auto">
+	<div class="row justify-content-between">
+		<div class="col-md-8 pt-3">
+			<h5 class="font-weight-bold spanborder"><span>Post Detail</span></h5>
+			<div id="details" class="ml-auto">
+                <div class="tab-pane fade show active" id="home" role="tabpanel" aria-labelledby="home-tab">
+                    <div class="mb-3 d-flex justify-content-between pt-2">
+                      <div class="pr-3">
+                        <h2 class="mb-1 h4 font-weight-bold">
+                          <a class="text-dark" href="{{ url_for('post.checkPost',id=post.ArticleId) }}">{{ post['ArticleTitle'] }}</a>
+                        </h2>
+                        <div class="card-text text-muted small">
+                           {{ post['ArticleAuthor'].UserName }}
+                        </div>
+                        <small class="text-muted">{{ post['ArticlePostDate'] }}</small>
+                        <small class="text-muted">{{ post['ArticleRead'] }}</small>
+                        <p>{{ post['ArticleContent'] }}</p>
+                      </div>
+                    </div>
+			</div>
+
+		</div>
+	</div>
+</div>
+{% endblock %}

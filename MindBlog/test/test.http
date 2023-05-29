@@ -1,0 +1,110 @@
+### user get test
+GET http://127.0.0.1:5000/users/852928 HTTP/1.1
+
+### user post test
+POST http://127.0.0.1:5000/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "UserId": 30,
+    "UserName": "shitfkl",
+    "UserEmail": "22345678910",
+    "UserPassword": "hello",
+    "id": 34,
+    "user_name": "shit"
+}
+
+### user register test
+POST http://127.0.0.1:5000/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "UserName":"looun",
+    "UserEmail":"1198749081@163.com",
+    "UserPassword":"looun.com"
+}
+
+### user login test
+POST http://127.0.0.1:5000/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "UserEmail":"jimmylooun@163.com",
+    "UserPassword":"looun.com"
+}
+
+### user logout test
+POST http://127.0.0.1:5000/users HTTP/1.1
+Content-Type: application/json
+
+{
+    "UserLogout":"True"
+}
+
+### user post test [defferent content_type]
+POST http://127.0.0.1:5000/users HTTP/1.1
+Content-Type: application/x-www-form-urlencoded
+
+{
+    "user_continuesign": 30,
+    "user_password": "shitfkl",
+    "user_phonenumber": "22345678910",
+    "user_points": 99,
+    "id": 34,
+    "user_name": "shit"
+}
+
+### user put测试
+PUT http://127.0.0.1:5000/users/177385 HTTP/1.1
+Content-Type: application/json
+
+{
+    "UserName":"looun",
+    "UserEmail":"jimmylooun@123.com"
+}
+
+### user delete test
+DELETE http://127.0.0.1:5000/users/177385 HTTP/1.1
+
+### article get test
+GEt http://127.0.0.1:5000/articles/914398 HTTP/1.1
+
+### article post test
+POST http://127.0.0.1:5000/articles/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "ArticleTitle" : "my second article",
+    "ArticleContent" : "hello motherfuker.youlittle shit",
+    "ArticlePostDate": "2023-5-23"
+}
+
+### article put test
+PUT http://127.0.0.1:5000/articles/914398 HTTP/1.1
+Content-Type: application/json
+
+{
+    "ArticleTitle" : "my third article",
+    "ArticleContent" : "hello motherfuker.youlittle shit",
+    "ArticlePostDate": "2023-5-23"
+}
+
+### article delete test
+DELETE http://127.0.0.1:5000/articles/914398 HTTP/1.1
+
+### comment get test
+GEt http://127.0.0.1:5000/comments/12 HTTP/1.1
+
+### comment post test
+POST http://127.0.0.1:5000/comments/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "CommentId" : 12,
+    "CommentContext" : "your article is good, keep posting.",
+    "CommentUsername" : "looun",
+    "CommentTime" : "2023-5-15"
+}
+
+###
+GET http://127.0.0.1:5000/code?type='register' HTTP/1.1

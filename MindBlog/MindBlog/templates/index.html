@@ -1,0 +1,203 @@
+{% extends "base.html" %}
+
+{% block title %}MindBlog{% endblock %}
+
+{% block navbar %} 
+{{ super() }}
+{% endblock %}
+
+{% block scripts %}
+{{ super() }}
+<!-- 局部刷新文章 -->
+<script>
+	//获取文章。
+	var pagenow = 1;
+	var pagesNum = 999;
+	var postNum = 0;
+	function Article(page){
+		if(page==0 | page > pagesNum){
+			return false;
+		}
+		console.log('in');
+		$.ajax({
+			type:'get',
+			url:'http://127.0.0.1:5000/all',
+			data:{
+				'page': Number(page)
+			},
+			success:function(data){
+				data = JSON.parse(data);
+				console.log('succeed get');
+				console.log(typeof(data));
+				var i = 0;
+				var html = '';
+				var page_left = 8
+
+				// 处理最后一页不足8篇文章的情况
+				if(pagesNum - pagenow == 1){
+					page_left = postNum - (pagenow*8);
+				}
+
+				for(;i < page_left;i++)
+				{
+					//console.log(toString(i));
+					art = data[i.toString()];
+				
+					
+					html += '<div class="mb-3 d-flex justify-content-between pt-2">\
+								<div class="pr-3">\
+									<h2 class="mb-1 h4 font-weight-bold">\
+										<a class="text-dark" href="post/'+art['ArticleId']+'">' + art['ArticleTitle']+'</a>\
+									</h2>\
+									<p>'+ art['ArticleContent']+'</p>\
+									<div class="card-text text-muted small">'+
+						 				art['ArticleAuthor']+
+									'</div>\
+									<small class="text-muted">'+ art['ArticlePostDate'] +'</small>"\
+									<small class="text-muted">'+ art['ArticleRead'] +' readed'+'</small>\
+								</div>\
+							</div>';
+				}
+				pagesNum = data['pagesNumber'];
+				postNum = data['postNumber'];
+				pagenow = page;
+				console.log(pagesNum);
+				// 局部刷新文章内容
+				document.getElementById('allarticles').innerHTML = html;
+				// 更新下方的页码
+				loadPages();
+			}
+		})
+	}
+
+	// 加载页码
+	function loadPages(){
+		var html = '';
+		var index = 0;
+		var left = pagenow % 5;
+		if(left == 0){
+			index = (pagenow/5 - 1)*5 + 1;
+		}else{
+			index = parseInt(pagenow/5)*5 + 1;
+		}
+		// 最后5页的index计算
+		if((pagesNum - index) < 4){
+			index = index - (4-(pagesNum - index));
+		}
+		for(j = 0;j < 5;j++){
+			if((index + j) == pagenow)
+			{
+				html += '<li class="page-item active"><a class="page-link" href="javascrpt:Article('+(index+j)+');">'+(index+j)+'</a></li>';
+			}else{
+				html += '<li class="page-item"><a class="page-link" href="javascript:Article('+(index+j)+')">'+(index+j)+'</a></li>';
+			}
+		}
+		htmlpre = '<p class="m-0 text-muted mr-auto">Showing <span>'+ ((pagenow-1)*8+1) +'</span> to <span>'+(pagenow*8)+'</span> of <span>'+ postNum +'</span> entries</p>\
+				<ul class="pagination m-1 ml-auto">\
+				<li class="page-item">\
+					<a class="page-link" href="javascript:Article('+(pagenow-1)+')" tabindex="-1" aria-disabled="true">\
+					<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><polyline points="15 6 9 12 15 18"></polyline></svg>\
+					上一页\
+					</a>\
+				</li>'
+		htmlpre += html;
+		htmlpre += '<li class="page-item">\
+					<a class="page-link" href="javascript:Article('+(pagenow+1)+')">\
+					下一页 <!-- Download SVG icon from http://tabler-icons.io/i/chevron-right -->\
+					<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><polyline points="9 6 15 12 9 18"></polyline></svg>\
+					</a>\
+				</li>\
+				</ul>'
+		document.getElementById('page-foot').innerHTML = htmlpre;
+
+	}
+	
+</script>
+{% endblock %}
+
+
+{% block page_content %}
+
+<div class="container mt-5">
+	<div class="row justify-content-between">
+		<div class="col-md-8 pt-3">
+			<h5 class="font-weight-bold spanborder"><span>All Stories</span></h5>
+			<div id="allarticles">
+
+			<script type="text/javascript">Article(1);</script>
+			</div>
+
+      		<!--分页-->
+      		<div class="raw d-flex align-items-center" id="page-foot">
+				<!--<p class="m-0 text-muted mr-auto">Showing <span>1</span> to <span>8</span> of <span>16</span> entries</p>
+				<ul class="pagination m-1 ml-auto">
+				<li class="page-item disabled">
+					<a class="page-link" href="#" tabindex="-1" aria-disabled="true">
+					<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><polyline points="15 6 9 12 15 18"></polyline></svg>
+					prev
+					</a>
+				</li>
+				<li class="page-item"><a class="page-link" href="#">1</a></li>
+				<li class="page-item active"><a class="page-link" href="#">2</a></li>
+				<li class="page-item"><a class="page-link" href="#">3</a></li>
+				<li class="page-item"><a class="page-link" href="#">4</a></li>
+				<li class="page-item"><a class="page-link" href="#">5</a></li>
+				<li class="page-item">
+					<a class="page-link" href="#">
+					next 
+					<svg xmlns="http://www.w3.org/2000/svg" class="icon" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round"><path stroke="none" d="M0 0h24v24H0z" fill="none"></path><polyline points="9 6 15 12 9 18"></polyline></svg>
+					</a>
+				</li>
+				</ul>-->
+      		</div>
+
+		</div>
+		<div class="col-md-4 pl-4 pt-3">
+            <h5 class="font-weight-bold spanborder"><span>Popular</span></h5>
+			<ol class="list-featured pt-2">
+				<li>
+				<span>
+				<h6 class="font-weight-bold">
+				<a href="./article.html" class="text-dark">Did Supernovae Kill Off Large Ocean Animals?</a>
+				</h6>
+				<p class="text-muted">
+					Jake Bittle in SCIENCE
+				</p>
+				</span>
+				</li>
+				<li>
+				<span>
+				<h6 class="font-weight-bold">
+				<a href="./article.html" class="text-dark">Humans Reversing Climate Clock: 50 Million Years</a>
+				</h6>
+				<p class="text-muted">
+					Jake Bittle in SCIENCE
+				</p>
+				</span>
+				</li>
+				<li>
+				<span>
+				<h6 class="font-weight-bold">
+				<a href="./article.html" class="text-dark">Unprecedented Views of the Birth of Planets</a>
+				</h6>
+				<p class="text-muted">
+					Jake Bittle in SCIENCE
+				</p>
+				</span>
+				</li>
+				<li>
+				<span>
+				<h6 class="font-weight-bold">
+				<a href="./article.html" class="text-dark">Effective New Target for Mood-Boosting Brain Stimulation Found</a>
+				</h6>
+				<p class="text-muted">
+					Jake Bittle in SCIENCE
+				</p>
+				</span>
+				</li>
+			</ol>
+		</div>
+	</div>
+</div>
+
+{% endblock %}
